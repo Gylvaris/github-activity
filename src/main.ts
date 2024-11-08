@@ -1,8 +1,14 @@
-export function add(a: number, b: number): number {
-  return a + b;
-}
+console.log("Check a user's GitHub activity!\nPlease provide a username.");
+const username = prompt("GitHub username:") || "";
 
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
-}
+async function getUserEvents(username: string) {
+    const response = await fetch(`https://api.github.com/users/${username}/events`);
+    return await response.json();
+};
+
+async function displayUserActivity(username:string) {
+    const events = await getUserEvents(username);
+    console.log(events)
+};
+
+displayUserActivity(username)
